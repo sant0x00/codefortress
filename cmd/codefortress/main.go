@@ -2,11 +2,8 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"os"
-	"os/exec"
-
 	"github.com/spf13/cobra"
+	"os"
 )
 
 func main() {
@@ -41,29 +38,15 @@ func installTool(tool string) {
 		} else {
 			installGit()
 		}
+	case "ssh":
+		if isSSHInstalled() {
+			fmt.Println("SSH is already installed.")
+		} else {
+			installSSH()
+		}
+
+		runSSH()
 	default:
-		log.Printf("Unknown tool: %s\n", tool)
+		fmt.Printf("Unknown tool: %s\n", tool)
 	}
-}
-
-func isGitInstalled() bool {
-	cmd := exec.Command("git", "--version")
-	err := cmd.Run()
-	return err == nil
-}
-
-func installGit() {
-	fmt.Println("Installing Git...")
-
-	cmd := exec.Command("go", "get", "-u", "github.com/git/git")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-
-	err := cmd.Run()
-	if err != nil {
-		fmt.Errorf("Error installing git: %v\n", err)
-		os.Exit(1)
-	}
-
-	fmt.Println("Git has been installed successfully.")
 }
