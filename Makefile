@@ -3,6 +3,7 @@ LOCAL_REPO = $(HOME)/Development/github.com/rios0rios0/pipelines
 .PHONY: build
 build:
 	rm -rf bin
+	go mod tidy
 	go build -o bin/codefortress ./cmd/codefortress
 
 .PHONY: run

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	logger "github.com/sirupsen/logrus"
 	"os"
 	"os/exec"
 )
@@ -14,7 +14,7 @@ func isGitInstalled() bool {
 }
 
 func installGit() {
-	fmt.Println("Installing Git...")
+	logger.Println("Trying installing Git...")
 
 	cmd := exec.Command("go", "get", "-u", "github.com/git/git")
 	cmd.Stdout = os.Stdout
@@ -22,9 +22,9 @@ func installGit() {
 
 	err := cmd.Run()
 	if err != nil {
-		fmt.Printf("Error installing git: %v\n", err)
+		logger.Errorf("Error installing Git: %s\n", err)
 		os.Exit(1)
 	}
 
-	fmt.Println("Git has been installed successfully.")
+	logger.Println("Git has been installed successfully!")
 }
