@@ -13,7 +13,7 @@ Welcome to **CodeFortress**, an arsenal designed to streamline the development e
 Current installed tools (automated):
 
 - Git (only installation)
-- GPG (only installation)
+- SSH (only installation)
 
 ### Next implementations
 
