@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	logger "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"os"
 )
@@ -22,10 +22,28 @@ func main() {
 		},
 	}
 
-	rootCmd.AddCommand(installCmd)
+	var createCmd = &cobra.Command{
+		Use:   "create ssh",
+		Short: "Create a new SSH key",
+		Long:  "Create a new SSH key and save it.",
+		Run: func(cmd *cobra.Command, args []string) {
+			runCreateSSH()
+		},
+	}
+
+	var addCmd = &cobra.Command{
+		Use:   "add ssh",
+		Short: "Add an existing SSH key",
+		Long:  "Add an existing SSH key to the .ssh folder.",
+		Run: func(cmd *cobra.Command, args []string) {
+			runAddSSH()
+		},
+	}
+
+	rootCmd.AddCommand(installCmd, createCmd, addCmd)
 
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
+		logger.Errorf("unable to execute Codefortress. Here the reason: %s\n", err)
 		os.Exit(1)
 	}
 }
@@ -34,19 +52,19 @@ func installTool(tool string) {
 	switch tool {
 	case "git":
 		if isGitInstalled() {
-			fmt.Println("Git is already installed.")
+			logger.Println("Git is already installed.")
 		} else {
 			installGit()
 		}
 	case "ssh":
 		if isSSHInstalled() {
-			fmt.Println("SSH is already installed.")
+			logger.Println("SSH is already installed.")
 		} else {
 			installSSH()
 		}
 
 		runSSH()
 	default:
-		fmt.Printf("Unknown tool: %s\n", tool)
+		logger.Printf("Unknown tool: %s", tool)
 	}
 }

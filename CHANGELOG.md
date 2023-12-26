@@ -20,6 +20,7 @@ Exceptions are acceptable depending on the circumstances (critical bug fixes tha
 
 - added script to install git
 - added script to install and create SSH
+- added configurations to add new SSH and existing SSH
 
 ### Changed
 
